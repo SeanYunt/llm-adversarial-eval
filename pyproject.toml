@@ -26,6 +26,10 @@ markers = [
     "indirect_injection: tests that probe for RAG / indirect prompt injection via retrieved documents",
     "specification_gaming: tests that probe for reward hacking and metric gaming over task intent",
     "system_prompt_leakage: tests that probe for structural leakage of operator system instructions",
+    "data_exfiltration: tests that probe for cross-user PHI boundary enforcement in multi-patient RAG contexts",
+    "virtualization: tests that probe for simulation/eval-mode attacks that claim restrictions are suspended",
+    "payload_splitting: tests that spread a harmful request across multiple turns to evade per-turn detection",
+    "competing_objectives: tests that weaponize internal system-prompt tensions to bypass safety constraints",
     "slow: tests that make many API calls",
 ]
 log_cli = true
