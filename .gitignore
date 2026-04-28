@@ -1,6 +1,13 @@
 # secrets
 .env
 
+# personal / local files
+Sean_Yunt_AI_RedTeam.md
+pitch.md
+pitch.pdf
+make_pdf.py
+.claude/
+
 # test output
 results/
 
