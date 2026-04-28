@@ -6,6 +6,7 @@ Set ANTHROPIC_API_KEY in your environment or a .env file before running.
 import json
 import logging
 import os
+from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -79,17 +80,52 @@ class ResultsCollector:
 
     def write_report(self, path: Path) -> None:
         judge_run = [r for r in self.results if r.judge_flagged is not None]
+        by_category: dict = defaultdict(lambda: {"total": 0, "flagged": 0, "judge_run": 0, "judge_flagged": 0})
+        for r in self.results:
+            cat = by_category[r.category]
+            cat["total"] += 1
+            if r.flagged:
+                cat["flagged"] += 1
+            if r.judge_flagged is not None:
+                cat["judge_run"] += 1
+            if r.judge_flagged:
+                cat["judge_flagged"] += 1
         data = {
             "generated": datetime.now(UTC).isoformat(),
             "total": len(self.results),
             "flagged": sum(1 for r in self.results if r.flagged),
             "judge_run": len(judge_run),
             "judge_flagged": sum(1 for r in judge_run if r.judge_flagged),
+            "by_category": dict(by_category),
             "results": [r.as_dict() for r in self.results],
         }
         path.write_text(json.dumps(data, indent=2))
         logger.info("Report written to %s (%d results, %d flagged)",
                     path, data["total"], data["flagged"])
+
+
+_SESSION_MODEL: str = "claude-haiku-4-5-20251001"
+
+
+def pytest_addoption(parser: pytest.Parser) -> None:
+    parser.addoption(
+        "--model",
+        default="claude-haiku-4-5-20251001",
+        help="Anthropic model ID to test against (default: claude-haiku-4-5-20251001)",
+    )
+
+
+def pytest_sessionstart(session: pytest.Session) -> None:
+    global _SESSION_MODEL
+    try:
+        _SESSION_MODEL = session.config.getoption("--model")
+    except ValueError:
+        pass  # option not registered in this invocation (e.g. --collect-only)
+
+
+@pytest.fixture(scope="session")
+def model(request: pytest.FixtureRequest) -> str:
+    return request.config.getoption("--model")
 
 
 @pytest.fixture(scope="session")
@@ -123,7 +159,7 @@ def probe(
     *,
     category: str,
     prompt: str,
-    model: str = "claude-haiku-4-5-20251001",
+    model: str | None = None,
     system: str | None = None,
     max_tokens: int = 512,
 ) -> ProbeResult:
@@ -131,6 +167,7 @@ def probe(
     Send a single prompt to Claude and capture the result.
     Does NOT hard-fail — every response is recorded for human review.
     """
+    model = model or _SESSION_MODEL
     messages = [{"role": "user", "content": prompt}]
     kwargs: dict = {"model": model, "max_tokens": max_tokens, "messages": messages}
     if system:
@@ -149,7 +186,7 @@ def multi_probe(
     *,
     category: str,
     messages: list[dict],
-    model: str = "claude-haiku-4-5-20251001",
+    model: str | None = None,
     system: str | None = None,
     max_tokens: int = 512,
 ) -> ProbeResult:
@@ -161,6 +198,7 @@ def multi_probe(
     tests to embed plausible prior turns (e.g. a correct assistant answer)
     before applying adversarial pressure in the final user turn.
     """
+    model = model or _SESSION_MODEL
     kwargs: dict = {"model": model, "max_tokens": max_tokens, "messages": messages}
     if system:
         kwargs["system"] = system
@@ -183,7 +221,7 @@ def vision_probe(
     category: str,
     image_path: "Path",
     prompt: str,
-    model: str = "claude-haiku-4-5-20251001",
+    model: str | None = None,
     system: str | None = None,
     max_tokens: int = 512,
 ) -> ProbeResult:
@@ -193,6 +231,7 @@ def vision_probe(
     The image is base64-encoded from a file path. Supported formats: PNG, JPEG,
     GIF, WEBP. Use PNG for test fixtures.
     """
+    model = model or _SESSION_MODEL
     import base64
     import mimetypes
 
@@ -263,7 +302,7 @@ def llm_judge(
         lines = text.splitlines()
         flagged_line = next((l for l in lines if l.upper().startswith("FLAGGED:")), "")
         reasoning_line = next((l for l in lines if l.upper().startswith("REASONING:")), "")
-        result.judge_flagged = "YES" in flagged_line.upper()
+        result.judge_flagged = flagged_line.upper().split(":", 1)[-1].strip().startswith("YES")
         result.judge_reasoning = reasoning_line.split(":", 1)[-1].strip()
     except Exception:  # noqa: BLE001
         pass  # leave judge_flagged=None; never break the test
