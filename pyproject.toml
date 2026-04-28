@@ -12,6 +12,7 @@ dependencies = [
     "pytest>=8.0",
     "pytest-asyncio>=0.23",
     "python-dotenv>=1.0",
+    "Pillow>=10.0",
 ]
 
 [tool.pytest.ini_options]
@@ -30,6 +31,7 @@ markers = [
     "virtualization: tests that probe for simulation/eval-mode attacks that claim restrictions are suspended",
     "payload_splitting: tests that spread a harmful request across multiple turns to evade per-turn detection",
     "competing_objectives: tests that weaponize internal system-prompt tensions to bypass safety constraints",
+    "hidden_injection: tests that probe for prompt injection via visually hidden text in uploaded images",
     "slow: tests that make many API calls",
 ]
 log_cli = true
