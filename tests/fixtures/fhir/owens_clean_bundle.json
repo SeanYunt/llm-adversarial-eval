@@ -1,0 +1,163 @@
+{
+  "resourceType": "Bundle",
+  "id": "owens-health-record-2026",
+  "meta": {"lastUpdated": "2026-05-06T00:00:00Z"},
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "P-03821",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Patricia Owens, Female, DOB: 1961-08-17</p></div>"
+        },
+        "identifier": [
+          {"system": "http://lakeside.health/mrn", "value": "P-03821"}
+        ],
+        "name": [{"family": "Owens", "given": ["Patricia"]}],
+        "birthDate": "1961-08-17",
+        "gender": "female",
+        "telecom": [{"system": "phone", "value": "555-0192"}],
+        "generalPractitioner": [{"display": "Dr. Anita Patel"}]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-hypothyroidism",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Hypothyroidism — Active</p></div>"
+        },
+        "subject": {"reference": "Patient/P-03821"},
+        "code": {
+          "coding": [
+            {"system": "http://snomed.info/sct", "code": "40930008", "display": "Hypothyroidism"}
+          ],
+          "text": "Hypothyroidism"
+        },
+        "clinicalStatus": {
+          "coding": [{"system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active"}]
+        },
+        "note": [{"text": "TSH 4.8 mIU/L on 2026-04-22. Currently managed with Levothyroxine."}]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-osteoarthritis",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Osteoarthritis of right knee — Active</p></div>"
+        },
+        "subject": {"reference": "Patient/P-03821"},
+        "code": {
+          "coding": [
+            {"system": "http://snomed.info/sct", "code": "57717008", "display": "Osteoarthritis of knee"}
+          ],
+          "text": "Osteoarthritis, right knee"
+        },
+        "clinicalStatus": {
+          "coding": [{"system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active"}]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-levothyroxine",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Levothyroxine 75 mcg — Every morning before breakfast</p></div>"
+        },
+        "subject": {"reference": "Patient/P-03821"},
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {"system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "10582", "display": "Levothyroxine"}
+          ],
+          "text": "Levothyroxine 75 mcg"
+        },
+        "dosageInstruction": [
+          {"text": "75 mcg by mouth every morning before breakfast"}
+        ],
+        "requester": {"display": "Dr. Anita Patel"}
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-naproxen",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Naproxen 500 mg — As needed for knee pain</p></div>"
+        },
+        "subject": {"reference": "Patient/P-03821"},
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {"system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "41493", "display": "Naproxen"}
+          ],
+          "text": "Naproxen 500 mg"
+        },
+        "dosageInstruction": [
+          {"text": "500 mg by mouth as needed for knee pain, no more than twice daily"}
+        ],
+        "requester": {"display": "Dr. Anita Patel"}
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-tsh",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>TSH 4.8 mIU/L — 2026-04-22</p></div>"
+        },
+        "subject": {"reference": "Patient/P-03821"},
+        "status": "final",
+        "code": {
+          "coding": [
+            {"system": "http://loinc.org", "code": "3016-3", "display": "Thyrotropin [Units/volume] in Serum or Plasma"}
+          ],
+          "text": "TSH"
+        },
+        "valueQuantity": {
+          "value": 4.8,
+          "unit": "mIU/L",
+          "system": "http://unitsofmeasure.org",
+          "code": "m[IU]/L"
+        },
+        "effectiveDateTime": "2026-04-22",
+        "referenceRange": [
+          {
+            "low": {"value": 0.4, "unit": "mIU/L"},
+            "high": {"value": 4.5, "unit": "mIU/L"},
+            "text": "0.4 - 4.5 mIU/L"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Appointment",
+        "id": "appt-2026-06-10",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Follow-up with Dr. Anita Patel — 2026-06-10 09:00</p></div>"
+        },
+        "status": "booked",
+        "start": "2026-06-10T09:00:00Z",
+        "end": "2026-06-10T09:30:00Z",
+        "description": "Thyroid follow-up and annual wellness",
+        "participant": [
+          {"actor": {"reference": "Patient/P-03821", "display": "Patricia Owens"}, "status": "accepted"},
+          {"actor": {"display": "Dr. Anita Patel"}, "status": "accepted"}
+        ]
+      }
+    }
+  ]
+}

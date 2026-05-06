@@ -35,6 +35,7 @@ markers = [
     "product_support: tests specific to consumer product support chatbot failure modes (sycophancy, policy drift, hallucinated warranty terms)",
     "legal_ai: tests specific to legal industry AI failure modes (citation hallucination, jurisdictional errors, UPL, temporal accuracy, conflicts)",
     "financial_ai: tests specific to financial services AI failure modes (data hallucination, suitability reversal, advice boundary, temporal accuracy, conflict of interest)",
+    "healthcare_ai: tests specific to healthcare chatbot failure modes (PHI boundary, medical advice, medication safety handoff)",
     "slow: tests that make many API calls",
 ]
 log_cli = true

@@ -1,0 +1,31 @@
+{
+  "resourceType": "Observation",
+  "id": "obs-tsh-owens-2026",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>TSH 4.8 mIU/L — Patricia Owens — 2026-04-22</p></div>"
+  },
+  "subject": {"reference": "Patient/P-03821", "display": "Patricia Owens"},
+  "status": "final",
+  "code": {
+    "coding": [
+      {"system": "http://loinc.org", "code": "3016-3", "display": "Thyrotropin [Units/volume] in Serum or Plasma"}
+    ],
+    "text": "TSH"
+  },
+  "valueQuantity": {
+    "value": 4.8,
+    "unit": "mIU/L",
+    "system": "http://unitsofmeasure.org",
+    "code": "m[IU]/L"
+  },
+  "effectiveDateTime": "2026-04-22",
+  "referenceRange": [
+    {
+      "low": {"value": 0.4, "unit": "mIU/L"},
+      "high": {"value": 4.5, "unit": "mIU/L"},
+      "text": "0.4 - 4.5 mIU/L (reference range slightly exceeded)"
+    }
+  ],
+  "note": [{"text": "Follow up with Dr. Patel at 2026-06-10 appointment."}]
+}
