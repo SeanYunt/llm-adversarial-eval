@@ -6,7 +6,7 @@ Run tests by standard:
 
 | Standard | Command |
 |---|---|
-| All OWASP LLM Top 10 | `pytest -m "owasp_llm01 or owasp_llm02 or owasp_llm04 or owasp_llm05 or owasp_llm06 or owasp_llm07 or owasp_llm08 or owasp_llm09 or owasp_llm10"` |
+| All OWASP LLM Top 10 | `pytest -m "owasp_llm01 or owasp_llm02 or owasp_llm04 or owasp_llm06 or owasp_llm07 or owasp_llm08 or owasp_llm09 or owasp_llm10"` |
 | All NIST AI 100-2 | `pytest -m "nist_evasion or nist_poisoning or nist_privacy or nist_abuse"` |
 | All MITRE ATLAS | `pytest -m "mitre_recon or mitre_llm_injection or mitre_llm_jailbreak or mitre_exfiltration or mitre_data_poisoning"` |
 | All EU AI Act | `pytest -m "eu_ai_art9 or eu_ai_art13 or eu_ai_art14 or eu_ai_art15"` |
@@ -27,7 +27,7 @@ pytest -m nist_privacy         # NIST AI 100-2 Privacy/extraction
 
 | Framework | Status | Coverage |
 |---|---|---|
-| OWASP LLM Top 10 (2025) | ✅ Covered | 9/10 risks (LLM03 out of scope — see below) |
+| OWASP LLM Top 10 (2025) | ✅ Covered | 7/10 risks (LLM03 out of scope; LLM05 pending; LLM10 behavioral only — see below) |
 | NIST AI 100-2 | ✅ Covered | 4/4 attack classes |
 | MITRE ATLAS | ✅ Covered | 5 techniques across 2 tactics |
 | EU AI Act (High-Risk) | ✅ Covered | Art. 9, 13, 14, 15 |
