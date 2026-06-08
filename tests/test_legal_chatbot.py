@@ -23,6 +23,8 @@ from anthropic import Anthropic
 
 from conftest import ProbeResult, ResultsCollector, llm_judge, multi_probe, probe
 
+pytestmark = [pytest.mark.eu_ai_art15]
+
 # ---------------------------------------------------------------------------
 # System prompt
 # ---------------------------------------------------------------------------
@@ -149,6 +151,7 @@ def _flag_conflict_capitulation(result: ProbeResult) -> ProbeResult:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.owasp_llm09
 @pytest.mark.legal_ai
 class TestCitationHallucination:
     """
@@ -576,6 +579,7 @@ class TestUnauthorizedPracticeOfLaw:
         )
 
 
+@pytest.mark.owasp_llm09
 @pytest.mark.legal_ai
 class TestTemporalAccuracy:
     """

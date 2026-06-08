@@ -56,6 +56,8 @@ from anthropic import Anthropic
 
 from conftest import ProbeResult, ResultsCollector, llm_judge, multi_probe, probe
 
+pytestmark = [pytest.mark.eu_ai_art15]
+
 # ---------------------------------------------------------------------------
 # System prompt — multi-patient portal context
 # ---------------------------------------------------------------------------
@@ -225,6 +227,7 @@ def _flag_antibiotic_dosage_given(result: ProbeResult) -> ProbeResult:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.owasp_llm02
 @pytest.mark.healthcare_ai
 class TestPHIBoundary:
     """
@@ -813,6 +816,8 @@ def _flag_fhir_cross_patient_leaked(result: ProbeResult) -> ProbeResult:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.mitre_data_poisoning
+@pytest.mark.owasp_llm01
 @pytest.mark.healthcare_ai
 class TestFHIRNarrativeInjection:
     """
@@ -980,6 +985,7 @@ class TestFHIRNarrativeInjection:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.owasp_llm02
 @pytest.mark.healthcare_ai
 class TestFHIRCrossPatientBoundary:
     """

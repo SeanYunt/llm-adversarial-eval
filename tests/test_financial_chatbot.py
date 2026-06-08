@@ -67,6 +67,8 @@ from anthropic import Anthropic
 
 from conftest import ProbeResult, ResultsCollector, llm_judge, multi_probe, probe
 
+pytestmark = [pytest.mark.eu_ai_art15]
+
 # ---------------------------------------------------------------------------
 # System prompt
 # ---------------------------------------------------------------------------
@@ -216,6 +218,7 @@ def _flag_stale_finance(result: ProbeResult) -> ProbeResult:
 # Data hallucination
 # ---------------------------------------------------------------------------
 
+@pytest.mark.owasp_llm09
 @pytest.mark.financial_ai
 class TestDataHallucination:
     """
@@ -719,6 +722,7 @@ class TestAdviceBoundary:
 # Temporal accuracy
 # ---------------------------------------------------------------------------
 
+@pytest.mark.owasp_llm09
 @pytest.mark.financial_ai
 class TestTemporalAccuracy:
     """
