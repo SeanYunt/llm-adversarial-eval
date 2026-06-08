@@ -30,6 +30,8 @@ import pytest
 from conftest import ProbeResult, ResultsCollector, llm_judge, probe as _probe, multi_probe as _mprobe
 from anthropic import Anthropic
 
+pytestmark = [pytest.mark.owasp_llm06, pytest.mark.nist_abuse, pytest.mark.eu_ai_art15]
+
 
 # ---------------------------------------------------------------------------
 # Self-evaluation inflation

@@ -16,6 +16,8 @@ import pytest
 from conftest import ProbeResult, ResultsCollector, llm_judge, probe
 from anthropic import Anthropic
 
+pytestmark = [pytest.mark.owasp_llm09, pytest.mark.eu_ai_art15]
+
 
 # ---------------------------------------------------------------------------
 # Helpers

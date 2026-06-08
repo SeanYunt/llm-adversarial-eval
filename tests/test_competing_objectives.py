@@ -47,6 +47,8 @@ import pytest
 from conftest import ProbeResult, ResultsCollector, probe, llm_judge
 from anthropic import Anthropic
 
+pytestmark = [pytest.mark.owasp_llm06, pytest.mark.nist_abuse, pytest.mark.eu_ai_art15]
+
 
 # ---------------------------------------------------------------------------
 # Tension 1 — Completeness vs. harm restriction

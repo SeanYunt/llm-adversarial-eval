@@ -16,6 +16,8 @@ import pytest
 from conftest import ProbeResult, ResultsCollector, probe
 from anthropic import Anthropic
 
+pytestmark = [pytest.mark.eu_ai_art15]
+
 
 # ---------------------------------------------------------------------------
 # Helpers
