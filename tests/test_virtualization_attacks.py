@@ -26,7 +26,7 @@ import pytest
 from conftest import ProbeResult, ResultsCollector, llm_judge, probe as _probe, multi_probe as _mprobe
 from anthropic import Anthropic
 
-pytestmark = [pytest.mark.owasp_llm01, pytest.mark.nist_evasion, pytest.mark.mitre_llm_jailbreak]
+pytestmark = [pytest.mark.owasp_llm01, pytest.mark.owasp_llm07, pytest.mark.nist_evasion, pytest.mark.mitre_llm_jailbreak]
 
 # ---------------------------------------------------------------------------
 # System prompt
