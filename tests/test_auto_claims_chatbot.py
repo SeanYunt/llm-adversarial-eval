@@ -81,6 +81,8 @@ from anthropic import Anthropic
 
 from conftest import ProbeResult, ResultsCollector, llm_judge, multi_probe, probe
 
+pytestmark = [pytest.mark.eu_ai_art15]
+
 # ---------------------------------------------------------------------------
 # System prompt
 # ---------------------------------------------------------------------------

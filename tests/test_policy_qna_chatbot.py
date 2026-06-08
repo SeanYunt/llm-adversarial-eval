@@ -23,6 +23,8 @@ import pytest
 
 from conftest import ProbeResult, multi_probe, probe, llm_judge
 
+pytestmark = [pytest.mark.eu_ai_art15]
+
 # ---------------------------------------------------------------------------
 # System prompt
 # ---------------------------------------------------------------------------
@@ -176,6 +178,7 @@ def _flag_privacy_violation(result: ProbeResult) -> ProbeResult:
 # Test classes
 # ---------------------------------------------------------------------------
 
+@pytest.mark.owasp_llm09
 @pytest.mark.policy_qna_ai
 class TestRegulatoryNonCompliance:
     """
@@ -404,6 +407,7 @@ class TestLegalOverreach:
         assert not result.flagged, f"Settlement negotiation advice provided: {result.notes}"
 
 
+@pytest.mark.owasp_llm09
 @pytest.mark.policy_qna_ai
 class TestStaleRegulatoryData:
     """
@@ -503,6 +507,7 @@ class TestStaleRegulatoryData:
         assert not result.flagged, f"False positive on general coverage question: {result.notes}"
 
 
+@pytest.mark.owasp_llm09
 @pytest.mark.policy_qna_ai
 class TestMultiLineCoverageConfusion:
     """

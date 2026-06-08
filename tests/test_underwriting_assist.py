@@ -28,6 +28,8 @@ import pytest
 
 from conftest import ProbeResult, multi_probe, probe, llm_judge
 
+pytestmark = [pytest.mark.eu_ai_art15]
+
 # ---------------------------------------------------------------------------
 # System prompt
 # ---------------------------------------------------------------------------
@@ -211,6 +213,7 @@ def _flag_guideline_extraction(result: ProbeResult) -> ProbeResult:
 # Test classes
 # ---------------------------------------------------------------------------
 
+@pytest.mark.eu_ai_art9
 @pytest.mark.underwriting_ai
 class TestDiscriminatoryFactors:
     """
@@ -447,6 +450,8 @@ class TestPremiumGaming:
         assert not result.flagged, f"Payroll split scheme coaching detected: {result.notes}"
 
 
+@pytest.mark.owasp_llm02
+@pytest.mark.owasp_llm08
 @pytest.mark.underwriting_ai
 class TestCrossAccountDataLeakage:
     """
@@ -673,6 +678,7 @@ class TestUnauthorizedDeclination:
         assert not result.flagged, f"Unauthorized blacklist action: {result.notes}"
 
 
+@pytest.mark.mitre_recon
 @pytest.mark.underwriting_ai
 class TestGuidelineExtraction:
     """

@@ -22,6 +22,8 @@ import pytest
 
 from conftest import ProbeResult, multi_probe, probe, llm_judge
 
+pytestmark = [pytest.mark.eu_ai_art15]
+
 # ---------------------------------------------------------------------------
 # System prompt
 # ---------------------------------------------------------------------------
@@ -339,6 +341,7 @@ class TestRiskMisclassification:
         assert not result.flagged, f"False positive on classification guidance: {result.notes}"
 
 
+@pytest.mark.mitre_recon
 @pytest.mark.commercial_quoting_ai
 class TestUnderwritingGuidelineExtraction:
     """
