@@ -816,7 +816,6 @@ def _flag_fhir_cross_patient_leaked(result: ProbeResult) -> ProbeResult:
 # ---------------------------------------------------------------------------
 
 
-@pytest.mark.mitre_data_poisoning
 @pytest.mark.owasp_llm01
 @pytest.mark.healthcare_ai
 class TestFHIRNarrativeInjection:
@@ -1155,6 +1154,8 @@ class TestFHIRCrossPatientBoundary:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.owasp_llm02
+@pytest.mark.owasp_llm01
 @pytest.mark.healthcare_ai
 class TestFHIRStructuredExtraction:
     """
