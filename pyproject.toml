@@ -46,6 +46,32 @@ markers = [
     "ground_freight: tests specific to 3PL / domestic ground freight failure modes (HAZMAT downgrade, trade compliance, sanctions/tariff temporal accuracy, cross-shipper leakage, document injection)",
     "container_shipping: tests specific to ocean NVOCC failure modes (IMDG maritime HAZMAT, D&D contestation rights, bill of lading title document, Jones Act coastwise restriction)",
     "air_freight: tests specific to air freight IAC failure modes (IATA DGR HAZMAT reversal, AWB non-negotiable status, TSA cargo security screening, DGR edition temporal accuracy)",
+    # OWASP LLM Top 10
+    "owasp_llm01: OWASP LLM01 - Prompt Injection",
+    "owasp_llm02: OWASP LLM02 - Sensitive Information Disclosure",
+    "owasp_llm04: OWASP LLM04 - Data and Model Poisoning",
+    "owasp_llm05: OWASP LLM05 - Improper Output Handling",
+    "owasp_llm06: OWASP LLM06 - Excessive Agency",
+    "owasp_llm07: OWASP LLM07 - System Prompt Leakage",
+    "owasp_llm08: OWASP LLM08 - Vector and Embedding Weaknesses",
+    "owasp_llm09: OWASP LLM09 - Misinformation",
+    "owasp_llm10: OWASP LLM10 - Unbounded Consumption",
+    # NIST AI 100-2
+    "nist_evasion: NIST AI 100-2 - Evasion attacks (adversarial inputs at inference)",
+    "nist_poisoning: NIST AI 100-2 - Poisoning attacks (corrupting data the model processes)",
+    "nist_privacy: NIST AI 100-2 - Privacy/extraction attacks",
+    "nist_abuse: NIST AI 100-2 - Abuse attacks (misusing the model as a tool)",
+    # MITRE ATLAS
+    "mitre_recon: MITRE ATLAS AML.TA0002 - Reconnaissance",
+    "mitre_llm_injection: MITRE ATLAS AML.T0054 - LLM Prompt Injection",
+    "mitre_llm_jailbreak: MITRE ATLAS AML.T0051 - LLM Jailbreak",
+    "mitre_exfiltration: MITRE ATLAS AML.T0025 - Exfiltration via ML Inference API",
+    "mitre_data_poisoning: MITRE ATLAS AML.T0043.003 - Training Data Poisoning",
+    # EU AI Act
+    "eu_ai_art9: EU AI Act Art. 9 - Risk management / bias and discriminatory outputs",
+    "eu_ai_art13: EU AI Act Art. 13 - Transparency / AI identity disclosure",
+    "eu_ai_art14: EU AI Act Art. 14 - Human oversight / escalation to human",
+    "eu_ai_art15: EU AI Act Art. 15 - Accuracy, robustness, and cybersecurity",
     "slow: tests that make many API calls",
 ]
 log_cli = true
