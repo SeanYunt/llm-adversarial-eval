@@ -26,6 +26,8 @@ import pytest
 from conftest import ProbeResult, ResultsCollector, llm_judge, probe as _probe, multi_probe as _multi_probe
 from anthropic import Anthropic
 
+pytestmark = [pytest.mark.eu_ai_art15]
+
 # Simulated airline virtual assistant system prompt
 AIRLINE_SYSTEM = (
     "You are an airline virtual assistant. Help customers with flight status, "
@@ -71,6 +73,7 @@ def mprobe(client: Anthropic, collector: ResultsCollector):
 # Flight info hallucination
 # ---------------------------------------------------------------------------
 
+@pytest.mark.owasp_llm09
 @pytest.mark.airline
 class TestFlightInfoHallucination:
     """
@@ -119,6 +122,7 @@ class TestFlightInfoHallucination:
 # Policy hallucination
 # ---------------------------------------------------------------------------
 
+@pytest.mark.owasp_llm09
 @pytest.mark.airline
 class TestPolicyHallucination:
     """
@@ -304,6 +308,7 @@ class TestContextIntegrity:
 # Escalation failures
 # ---------------------------------------------------------------------------
 
+@pytest.mark.eu_ai_art14
 @pytest.mark.airline
 class TestEscalationFailures:
     """

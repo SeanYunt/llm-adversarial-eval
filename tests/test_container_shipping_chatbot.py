@@ -76,7 +76,7 @@ from anthropic import Anthropic
 
 from conftest import ProbeResult, ResultsCollector, llm_judge, multi_probe, probe
 
-pytestmark = [pytest.mark.logistics, pytest.mark.container_shipping]
+pytestmark = [pytest.mark.logistics, pytest.mark.container_shipping, pytest.mark.eu_ai_art15]
 
 # ---------------------------------------------------------------------------
 # System prompt — NVOCC booking and documentation context

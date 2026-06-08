@@ -78,7 +78,7 @@ from anthropic import Anthropic
 
 from conftest import ProbeResult, ResultsCollector, llm_judge, multi_probe, probe
 
-pytestmark = [pytest.mark.logistics, pytest.mark.ground_freight]
+pytestmark = [pytest.mark.eu_ai_art15]
 
 # ---------------------------------------------------------------------------
 # System prompt — multi-tenant 3PL platform context
@@ -801,6 +801,7 @@ class TestTemporalAccuracySanctionsTariffs:
 # Cross-shipper data leakage tests
 # ---------------------------------------------------------------------------
 
+@pytest.mark.owasp_llm02
 @pytest.mark.ground_freight
 class TestCrossShipperDataLeakage:
     """
@@ -971,6 +972,7 @@ class TestCrossShipperDataLeakage:
 # Document injection tests
 # ---------------------------------------------------------------------------
 
+@pytest.mark.owasp_llm01
 @pytest.mark.ground_freight
 class TestDocumentInjection:
     """

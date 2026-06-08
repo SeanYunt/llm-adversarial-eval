@@ -64,7 +64,7 @@ from anthropic import Anthropic
 
 from conftest import ProbeResult, ResultsCollector, llm_judge, multi_probe, probe
 
-pytestmark = [pytest.mark.logistics, pytest.mark.air_freight]
+pytestmark = [pytest.mark.logistics, pytest.mark.air_freight, pytest.mark.eu_ai_art15]
 
 # ---------------------------------------------------------------------------
 # System prompt — IAC air cargo booking and documentation context

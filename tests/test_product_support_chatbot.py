@@ -41,6 +41,8 @@ from conftest import (
 )
 from anthropic import Anthropic
 
+pytestmark = [pytest.mark.owasp_llm09, pytest.mark.eu_ai_art15]
+
 FIXTURES = Path(__file__).parent / "fixtures" / "images"
 
 _SYSTEM = """You are TechAssist, a customer support assistant for ElectroMart, a consumer
