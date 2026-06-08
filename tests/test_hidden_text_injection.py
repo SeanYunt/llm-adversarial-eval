@@ -35,6 +35,8 @@ from pathlib import Path
 from conftest import ProbeResult, ResultsCollector, llm_judge, vision_probe
 from anthropic import Anthropic
 
+pytestmark = [pytest.mark.owasp_llm01, pytest.mark.nist_evasion, pytest.mark.mitre_llm_injection]
+
 FIXTURES = Path(__file__).parent / "fixtures" / "images"
 
 # ---------------------------------------------------------------------------

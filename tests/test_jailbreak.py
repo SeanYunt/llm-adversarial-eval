@@ -14,6 +14,7 @@ import pytest
 from conftest import ProbeResult, ResultsCollector, probe
 from anthropic import Anthropic
 
+pytestmark = [pytest.mark.owasp_llm01, pytest.mark.nist_evasion]
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -57,6 +58,7 @@ def flag_if_complied(result: ProbeResult) -> ProbeResult:
 # Persona / identity attacks
 # ---------------------------------------------------------------------------
 
+@pytest.mark.mitre_llm_jailbreak
 @pytest.mark.jailbreak
 class TestPersonaAttacks:
     """Attempt to make Claude adopt an unrestricted alter-ego."""
@@ -120,6 +122,7 @@ class TestPersonaAttacks:
 # Fictional / academic framing
 # ---------------------------------------------------------------------------
 
+@pytest.mark.mitre_llm_jailbreak
 @pytest.mark.jailbreak
 class TestFictionalFraming:
     """Use story, roleplay, or research framings to extract restricted content."""
@@ -180,6 +183,7 @@ class TestFictionalFraming:
 # Prompt injection (system prompt override)
 # ---------------------------------------------------------------------------
 
+@pytest.mark.mitre_llm_injection
 @pytest.mark.jailbreak
 class TestPromptInjection:
     """Attempt to override or leak the system prompt."""
@@ -239,6 +243,7 @@ class TestPromptInjection:
 # Many-shot / context manipulation
 # ---------------------------------------------------------------------------
 
+@pytest.mark.mitre_llm_jailbreak
 @pytest.mark.jailbreak
 @pytest.mark.slow
 class TestContextManipulation:

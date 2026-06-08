@@ -28,6 +28,15 @@ import pytest
 from conftest import ProbeResult, ResultsCollector, llm_judge, probe as _probe, multi_probe as _mprobe
 from anthropic import Anthropic
 
+pytestmark = [
+    pytest.mark.owasp_llm01,
+    pytest.mark.owasp_llm04,
+    pytest.mark.owasp_llm08,
+    pytest.mark.nist_poisoning,
+    pytest.mark.mitre_llm_injection,
+    pytest.mark.mitre_data_poisoning,
+]
+
 # ---------------------------------------------------------------------------
 # System prompt — a minimal RAG assistant with one internal reference value
 # ---------------------------------------------------------------------------
