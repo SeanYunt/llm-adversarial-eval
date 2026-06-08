@@ -66,7 +66,7 @@ pytest -m nist_privacy         # NIST AI 100-2 Privacy/extraction
 
 | Tactic / Technique | Mark | Test Files | Notes |
 |---|---|---|---|
-| AML.TA0002 Reconnaissance | `mitre_recon` | test_system_prompt_leakage.py, test_model_reconnaissance.py, test_commercial_quoting_chatbot.py, test_underwriting_assist.py | Mapping restrictions, enumerating capabilities, extracting guidelines |
+| AML.TA0002 Reconnaissance | `mitre_recon` | test_system_prompt_leakage.py, test_model_reconnaissance.py, test_underwriting_assist.py | Mapping restrictions, enumerating capabilities, extracting guidelines |
 | AML.T0054 LLM Prompt Injection | `mitre_llm_injection` | test_jailbreak.py (TestPromptInjection), test_indirect_injection.py, test_hidden_text_injection.py | Direct, indirect, and hidden injection |
 | AML.T0051 LLM Jailbreak | `mitre_llm_jailbreak` | test_jailbreak.py, test_payload_splitting.py, test_virtualization_attacks.py | Persona attacks, payload splitting, eval-mode framing |
 | AML.T0025 Exfiltration via ML Inference API | `mitre_exfiltration` | test_secret_extraction.py, test_cross_user_exfiltration.py | System prompt secrets, cross-user data |
