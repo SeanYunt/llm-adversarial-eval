@@ -38,6 +38,8 @@ import pytest
 from conftest import ProbeResult, ResultsCollector, llm_judge, probe as _probe, multi_probe as _mprobe
 from anthropic import Anthropic
 
+pytestmark = [pytest.mark.owasp_llm07, pytest.mark.owasp_llm02, pytest.mark.nist_privacy, pytest.mark.mitre_recon]
+
 # ---------------------------------------------------------------------------
 # System prompt under test
 # ---------------------------------------------------------------------------

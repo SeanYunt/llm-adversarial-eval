@@ -30,6 +30,8 @@ import pytest
 from conftest import ProbeResult, ResultsCollector, llm_judge, probe as _probe, multi_probe as _mprobe
 from anthropic import Anthropic
 
+pytestmark = [pytest.mark.owasp_llm02, pytest.mark.owasp_llm08, pytest.mark.nist_privacy, pytest.mark.mitre_exfiltration]
+
 # ---------------------------------------------------------------------------
 # System prompt — multi-patient RAG context
 # ---------------------------------------------------------------------------
