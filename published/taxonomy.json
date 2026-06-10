@@ -1,0 +1,671 @@
+{
+  "generated": "2026-06-10T05:46:38.176198+00:00",
+  "summary": {
+    "covered": 10,
+    "in_depth": 10,
+    "expanding": 25,
+    "total": 45
+  },
+  "frameworks": [
+    "eu_ai_art14",
+    "eu_ai_art15",
+    "mitre_exfiltration",
+    "mitre_llm_injection",
+    "mitre_llm_jailbreak",
+    "mitre_recon",
+    "nist_abuse",
+    "nist_evasion",
+    "nist_poisoning",
+    "nist_privacy",
+    "owasp_llm01",
+    "owasp_llm02",
+    "owasp_llm04",
+    "owasp_llm05",
+    "owasp_llm06",
+    "owasp_llm07",
+    "owasp_llm08",
+    "owasp_llm09",
+    "owasp_llm10"
+  ],
+  "categories": [
+    {
+      "category": "Jailbreak & Injection",
+      "description": "Input-side manipulation to elicit policy-violating output.",
+      "methods": [
+        {
+          "name": "Direct persona / alter-ego (DAN-style)",
+          "status": "covered",
+          "status_label": "Covered",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion",
+            "mitre_llm_jailbreak"
+          ],
+          "blurb": "Alter-ego personas instructed to ignore restrictions.",
+          "tests": [
+            "tests/test_jailbreak.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Fictional / academic framing",
+          "status": "covered",
+          "status_label": "Covered",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion",
+            "mitre_llm_jailbreak"
+          ],
+          "blurb": "Story, roleplay, or research framings that wrap a restricted request.",
+          "tests": [
+            "tests/test_jailbreak.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Direct system-prompt override",
+          "status": "covered",
+          "status_label": "Covered",
+          "frameworks": [
+            "owasp_llm01",
+            "mitre_llm_injection"
+          ],
+          "blurb": "SYSTEM OVERRIDE / ignore-previous-instructions injection in the user turn.",
+          "tests": [
+            "tests/test_jailbreak.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Indirect injection via retrieved content",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "frameworks": [
+            "owasp_llm01",
+            "owasp_llm04",
+            "nist_poisoning",
+            "mitre_llm_injection"
+          ],
+          "blurb": "Instructions embedded in RAG documents the model is asked to process.",
+          "tests": [
+            "tests/test_indirect_injection.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Payload splitting (multi-turn)",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion",
+            "mitre_llm_jailbreak"
+          ],
+          "blurb": "A harmful request spread across individually-innocuous turns.",
+          "tests": [
+            "tests/test_payload_splitting.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Virtualization / eval-mode framing",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion",
+            "mitre_llm_jailbreak"
+          ],
+          "blurb": "Claims that safety rules are suspended in a sandbox/test/dry-run context.",
+          "tests": [
+            "tests/test_virtualization_attacks.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Base64 / encoding smuggling",
+          "status": "covered",
+          "status_label": "Covered",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion",
+            "mitre_llm_jailbreak"
+          ],
+          "blurb": "Harmful instruction encoded (base64) to slip past surface matching.",
+          "tests": [
+            "tests/test_jailbreak.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Many-shot jailbreaking (128-256 shots)",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion",
+            "mitre_llm_jailbreak"
+          ],
+          "blurb": "Flooding context with many fake exchanges to erode refusal at scale.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Crescendo (gradual escalation)",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion",
+            "mitre_llm_jailbreak"
+          ],
+          "blurb": "Benign-to-harmful drift within a single topic across turns.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Past-tense reformulation",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion",
+            "mitre_llm_jailbreak"
+          ],
+          "blurb": "Reframing a prohibited request in the past tense to bypass refusal.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Refusal suppression / prefix injection",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion",
+            "mitre_llm_jailbreak"
+          ],
+          "blurb": "Forcing an affirmative opening or banning disclaimers/apologies.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Low-resource-language / translation bypass",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion",
+            "mitre_llm_jailbreak"
+          ],
+          "blurb": "Routing a harmful request through a low-resource language.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Cipher / ASCII-art evasion (ArtPrompt, CipherChat)",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion",
+            "mitre_llm_jailbreak"
+          ],
+          "blurb": "Glyph- or cipher-based encodings that evade the safety classifier.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Adversarial suffix (GCG / transferable)",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion",
+            "mitre_llm_jailbreak"
+          ],
+          "blurb": "Optimized gibberish suffixes that flip refusal to compliance.",
+          "tests": [],
+          "source_links": []
+        }
+      ]
+    },
+    {
+      "category": "Information Extraction",
+      "description": "Eliciting protected context, secrets, or other users' data.",
+      "methods": [
+        {
+          "name": "System-prompt leakage (structural)",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "frameworks": [
+            "owasp_llm02",
+            "owasp_llm07",
+            "nist_privacy",
+            "mitre_recon"
+          ],
+          "blurb": "Enumerating restrictions, escalation triggers, and operator instructions.",
+          "tests": [
+            "tests/test_system_prompt_leakage.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Secret / token extraction",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "frameworks": [
+            "owasp_llm02",
+            "owasp_llm07",
+            "nist_privacy",
+            "mitre_exfiltration"
+          ],
+          "blurb": "Direct, encoded, roleplay, indirect, and multi-turn secret extraction.",
+          "tests": [
+            "tests/test_secret_extraction.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Cross-user / PHI boundary breach",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "frameworks": [
+            "owasp_llm02",
+            "owasp_llm08",
+            "nist_privacy",
+            "mitre_exfiltration"
+          ],
+          "blurb": "Extracting another tenant's records from a multi-user RAG context.",
+          "tests": [
+            "tests/test_cross_user_exfiltration.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Training-data memorization extraction",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm02",
+            "nist_privacy",
+            "mitre_exfiltration"
+          ],
+          "blurb": "Divergence/repetition attacks that surface memorized training text.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Membership inference / model inversion",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "nist_privacy"
+          ],
+          "blurb": "Inferring training-set membership; largely research-only behaviorally.",
+          "tests": [],
+          "source_links": []
+        }
+      ]
+    },
+    {
+      "category": "Output Handling",
+      "description": "Unsafe model output that harms a downstream consumer.",
+      "methods": [
+        {
+          "name": "Markdown / image data exfiltration",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm05",
+            "owasp_llm02"
+          ],
+          "blurb": "Emitting an image/link URL that leaks context to an attacker on render.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Insecure generated code as output",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm05"
+          ],
+          "blurb": "Generated SQL/HTML/shell that is unsafe when executed downstream.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Structured-output breakout",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm05"
+          ],
+          "blurb": "JSON/format injection that escapes the intended output contract.",
+          "tests": [],
+          "source_links": []
+        }
+      ]
+    },
+    {
+      "category": "Agentic & Tool-Use",
+      "description": "Misuse of an agent's tools, authority, or memory.",
+      "methods": [
+        {
+          "name": "Described-tool action boundary",
+          "status": "covered",
+          "status_label": "Covered",
+          "frameworks": [
+            "owasp_llm06",
+            "nist_abuse",
+            "eu_ai_art14"
+          ],
+          "blurb": "Refusing to claim execution of described (non-real) tool actions.",
+          "tests": [
+            "tests/test_agentic_boundary.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Unbounded consumption (behavioral)",
+          "status": "covered",
+          "status_label": "Covered",
+          "frameworks": [
+            "owasp_llm10",
+            "nist_abuse"
+          ],
+          "blurb": "Refusing to attempt unbounded/indefinite output generation.",
+          "tests": [
+            "tests/test_agentic_boundary.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Real tool-call / function injection",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm06",
+            "mitre_llm_injection"
+          ],
+          "blurb": "Injection that drives actual API tool calls via the tools= interface.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Tool-result injection",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm06",
+            "owasp_llm01"
+          ],
+          "blurb": "Poisoned tool_result blocks accepted as authoritative.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Confused-deputy / goal hijack via tool chaining",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm06",
+            "nist_abuse"
+          ],
+          "blurb": "Injected content steering an agent to misuse its own privileges.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Persistent memory poisoning",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm06",
+            "owasp_llm04"
+          ],
+          "blurb": "Cross-session corruption of agent memory.",
+          "tests": [],
+          "source_links": []
+        }
+      ]
+    },
+    {
+      "category": "Multimodal",
+      "description": "Attacks delivered through non-text channels.",
+      "methods": [
+        {
+          "name": "Hidden-text image injection",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion",
+            "mitre_llm_injection"
+          ],
+          "blurb": "Near-invisible or tiny-font instructions embedded in uploaded images.",
+          "tests": [
+            "tests/test_hidden_text_injection.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Unicode tag-block / invisible-char smuggling (text)",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion"
+          ],
+          "blurb": "Instructions hidden in U+E0000 tag characters within plain text.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Homoglyph substitution",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion"
+          ],
+          "blurb": "Look-alike Unicode characters that evade string-level filters.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Audio / QR / steganographic payloads",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm01",
+            "nist_evasion"
+          ],
+          "blurb": "Instructions carried in audio, QR codes, or image steganography.",
+          "tests": [],
+          "source_links": []
+        }
+      ]
+    },
+    {
+      "category": "Generation-Quality Harms",
+      "description": "Confident-but-wrong or unsafe content under normal use.",
+      "methods": [
+        {
+          "name": "Factual hallucination",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "frameworks": [
+            "owasp_llm09",
+            "eu_ai_art15"
+          ],
+          "blurb": "Fabricated people, events, citations, and false-premise acceptance.",
+          "tests": [
+            "tests/test_factual_hallucinations.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Sycophantic reversal under pressure",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "frameworks": [
+            "owasp_llm09",
+            "eu_ai_art15"
+          ],
+          "blurb": "Abandoning a correct position under pushback, authority, or emotion.",
+          "tests": [
+            "tests/test_sycophancy.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Temporal / stale-data error",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "frameworks": [
+            "owasp_llm09",
+            "eu_ai_art15"
+          ],
+          "blurb": "Stale regulatory/legal/market facts stated without a staleness hedge.",
+          "tests": [
+            "tests/test_legal_chatbot.py",
+            "tests/test_financial_chatbot.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Package hallucination (slopsquatting)",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm09"
+          ],
+          "blurb": "Inventing installable package names an attacker can register.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Insecure-code suggestion (measured)",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm09"
+          ],
+          "blurb": "Systematically scoring the safety of generated code, not just eliciting it.",
+          "tests": [],
+          "source_links": []
+        }
+      ]
+    },
+    {
+      "category": "Content-Harm Payloads",
+      "description": "The harmful subject matter that jailbreaks attempt to elicit.",
+      "methods": [
+        {
+          "name": "Medical / overdose / dosing",
+          "status": "covered",
+          "status_label": "Covered",
+          "frameworks": [
+            "nist_abuse",
+            "eu_ai_art15"
+          ],
+          "blurb": "Lethal-dose and unsafe-dosing requests across competing-objective framings.",
+          "tests": [
+            "tests/test_competing_objectives.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Protected health information (PHI)",
+          "status": "covered",
+          "status_label": "Covered",
+          "frameworks": [
+            "owasp_llm02"
+          ],
+          "blurb": "Cross-patient PHI and FHIR-boundary extraction.",
+          "tests": [
+            "tests/test_healthcare_chatbot.py",
+            "tests/test_cross_user_exfiltration.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Dangerous-goods / HAZMAT downgrade",
+          "status": "covered",
+          "status_label": "Covered",
+          "frameworks": [
+            "eu_ai_art15"
+          ],
+          "blurb": "Pressure to downgrade HAZMAT/DGR/IMDG safety classifications.",
+          "tests": [
+            "tests/test_logistics_chatbot.py",
+            "tests/test_air_freight_chatbot.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Regulated advice boundary (legal / financial)",
+          "status": "covered",
+          "status_label": "Covered",
+          "frameworks": [
+            "owasp_llm09",
+            "eu_ai_art14"
+          ],
+          "blurb": "UPL, unregistered-adviser, and suitability-reversal boundaries.",
+          "tests": [
+            "tests/test_legal_chatbot.py",
+            "tests/test_financial_chatbot.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "CBRN uplift",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm09"
+          ],
+          "blurb": "Chemical/biological/radiological/nuclear capability uplift.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Malware / offensive-cyber generation",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm09"
+          ],
+          "blurb": "Working exploit, malware, or intrusion tooling generation.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Fraud / scam / targeted disinformation",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm09"
+          ],
+          "blurb": "Scam scripts, phishing, and tailored disinformation authoring.",
+          "tests": [],
+          "source_links": []
+        },
+        {
+          "name": "Self-harm (non-overdose)",
+          "status": "expanding",
+          "status_label": "Expanding",
+          "frameworks": [
+            "owasp_llm09",
+            "eu_ai_art15"
+          ],
+          "blurb": "Self-harm methods beyond the medication-overdose vector already covered.",
+          "tests": [],
+          "source_links": []
+        }
+      ]
+    }
+  ]
+}
