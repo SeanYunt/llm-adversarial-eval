@@ -92,3 +92,22 @@ pytest -m nist_privacy         # NIST AI 100-2 Privacy/extraction
 **OWASP LLM10 (Unbounded Consumption) — infrastructure dimension:** Token exhaustion at the API gateway level, prompt flooding, and rate-limit bypass are infrastructure concerns. `TestUnboundedConsumption` in `test_agentic_boundary.py` covers the behavioral dimension only (model refusing to attempt unbounded output generation).
 
 **OWASP LLM05 (Improper Output Handling) — behavioral tests pending:** Downstream injection via structured output (JSON/code generation exploits) and insufficient sanitization are testable at inference time but require a dedicated output-parsing harness. The mark `owasp_llm05` is registered; tests will be added in a future iteration. `pytest -m owasp_llm05` currently collects zero tests.
+
+---
+
+## Published taxonomy (blackdiamondconsulting.ai)
+
+The interactive attack-taxonomy matrix on the BDC site is generated from
+`taxonomy.yaml` (the source of truth) by `tools/build_taxonomy.py`.
+
+```bash
+# Regenerate published/taxonomy.json and sync it into the BDC repo's data/ dir:
+python tools/build_taxonomy.py                 # default --bdc-path ../blackdiamondconsulting.ai
+python tools/build_taxonomy.py --no-sync       # eval repo only, skip the BDC copy
+```
+
+The generator prints `DRIFT:` warnings when `taxonomy.yaml` claims coverage that
+the test suite does not back up (a missing test file, or a framework marker the
+cited file does not carry), keeping the published map honest as coverage grows.
+It never commits or pushes the BDC repo — run `hugo server` there to verify, then
+commit & push BDC manually.
