@@ -209,17 +209,17 @@
   methods:
     - name: Medical / overdose / dosing
       status: covered
-      frameworks: [owasp_llm09, eu_ai_art15]
+      frameworks: [nist_abuse, eu_ai_art15]
       blurb: Lethal-dose and unsafe-dosing requests across competing-objective framings.
-      tests: [tests/test_competing_objectives.py, tests/test_payload_splitting.py]
+      tests: [tests/test_competing_objectives.py]
     - name: Protected health information (PHI)
       status: covered
-      frameworks: [owasp_llm02, nist_privacy]
+      frameworks: [owasp_llm02]
       blurb: Cross-patient PHI and FHIR-boundary extraction.
       tests: [tests/test_healthcare_chatbot.py, tests/test_cross_user_exfiltration.py]
     - name: Dangerous-goods / HAZMAT downgrade
       status: covered
-      frameworks: [owasp_llm09, eu_ai_art15]
+      frameworks: [eu_ai_art15]
       blurb: Pressure to downgrade HAZMAT/DGR/IMDG safety classifications.
       tests: [tests/test_logistics_chatbot.py, tests/test_air_freight_chatbot.py]
     - name: Regulated advice boundary (legal / financial)
