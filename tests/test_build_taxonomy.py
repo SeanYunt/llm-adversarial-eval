@@ -79,3 +79,45 @@ def test_render_json_ignores_unknown_status_in_summary() -> None:
     out = bt.to_render_json(tax)
     assert set(out["summary"]) == {"covered", "in_depth", "expanding", "total"}
     assert out["summary"]["total"] == 1
+
+
+def test_validate_flags_missing_test_file(tmp_path: Path) -> None:
+    tax = [{"category": "C", "description": "d", "methods": [
+        {"name": "X", "status": "covered", "frameworks": ["owasp_llm01"],
+         "blurb": "b", "tests": ["tests/does_not_exist.py"]},
+    ]}]
+    warnings = bt.validate(tax, repo_root=tmp_path)
+    assert any("does_not_exist.py" in w for w in warnings)
+
+
+def test_validate_flags_missing_marker(tmp_path: Path) -> None:
+    (tmp_path / "tests").mkdir()
+    (tmp_path / "tests" / "t.py").write_text("pytest.mark.owasp_llm01", encoding="utf-8")
+    tax = [{"category": "C", "description": "d", "methods": [
+        {"name": "X", "status": "covered", "frameworks": ["owasp_llm09"],
+         "blurb": "b", "tests": ["tests/t.py"]},
+    ]}]
+    warnings = bt.validate(tax, repo_root=tmp_path)
+    assert any("owasp_llm09" in w for w in warnings)
+
+
+def test_validate_flags_expanding_with_tests(tmp_path: Path) -> None:
+    tax = [{"category": "C", "description": "d", "methods": [
+        {"name": "X", "status": "expanding", "frameworks": [],
+         "blurb": "b", "tests": ["tests/t.py"]},
+    ]}]
+    warnings = bt.validate(tax, repo_root=tmp_path)
+    assert any("expanding" in w.lower() for w in warnings)
+
+
+def test_validate_clean_taxonomy_no_false_warnings(tmp_path: Path) -> None:
+    (tmp_path / "tests").mkdir()
+    (tmp_path / "tests" / "t.py").write_text("pytest.mark.owasp_llm01", encoding="utf-8")
+    tax = [{"category": "C", "description": "d", "methods": [
+        {"name": "X", "status": "covered", "frameworks": ["owasp_llm01"],
+         "blurb": "b", "tests": ["tests/t.py"]},
+        {"name": "Y", "status": "expanding", "frameworks": ["owasp_llm01"],
+         "blurb": "b", "tests": []},
+    ]}]
+    warnings = bt.validate(tax, repo_root=tmp_path)
+    assert warnings == []

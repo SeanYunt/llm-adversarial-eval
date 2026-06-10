@@ -62,3 +62,29 @@ def to_render_json(taxonomy: list[dict], *, source_base_url: str = "") -> dict:
         "frameworks": sorted(frameworks),
         "categories": categories,
     }
+
+
+def validate(taxonomy: list[dict], *, repo_root: Path = REPO_ROOT) -> list[str]:
+    """Return non-fatal drift warnings comparing the taxonomy to the live suite."""
+    warnings: list[str] = []
+    for cat in taxonomy:
+        for m in cat["methods"]:
+            name, status = m["name"], m["status"]
+            tests = m.get("tests", [])
+            if status == "expanding" and tests:
+                warnings.append(f"'{name}': status is expanding but lists tests {tests}")
+            if status in ("covered", "in_depth"):
+                if not tests:
+                    warnings.append(f"'{name}': status {status} but no tests listed")
+                for rel in tests:
+                    path = repo_root / rel
+                    if not path.exists():
+                        warnings.append(f"'{name}': test file missing: {rel}")
+                        continue
+                    text = path.read_text(encoding="utf-8", errors="ignore")
+                    for fw in m.get("frameworks", []):
+                        if fw not in text:
+                            warnings.append(
+                                f"'{name}': marker '{fw}' not found in {rel}"
+                            )
+    return warnings
