@@ -1,4 +1,5 @@
 """Unit tests for the taxonomy generator (no API calls)."""
+import json
 import sys
 from pathlib import Path
 
@@ -121,3 +122,54 @@ def test_validate_clean_taxonomy_no_false_warnings(tmp_path: Path) -> None:
     ]}]
     warnings = bt.validate(tax, repo_root=tmp_path)
     assert warnings == []
+
+
+def test_write_artifact_creates_json(tmp_path: Path) -> None:
+    tax = [{"category": "C", "description": "d", "methods": [
+        {"name": "X", "status": "covered", "frameworks": ["owasp_llm01"],
+         "blurb": "b", "tests": []},
+    ]}]
+    out = bt.write_artifact(tax, dest=tmp_path / "out.json")
+    assert (tmp_path / "out.json").exists()
+    data = json.loads((tmp_path / "out.json").read_text(encoding="utf-8"))
+    assert data["summary"]["total"] == 1
+    assert out == tmp_path / "out.json"
+
+
+def test_sync_to_bdc_copies_file(tmp_path: Path) -> None:
+    src = tmp_path / "taxonomy.json"
+    src.write_text('{"test": 1}', encoding="utf-8")
+    bdc = tmp_path / "bdc_repo"
+    bdc.mkdir()
+    (bdc / "data").mkdir()
+    dest = bt.sync_to_bdc(src, bdc_path=bdc)
+    assert dest == bdc / "data" / "taxonomy.json"
+    assert (bdc / "data" / "taxonomy.json").read_text(encoding="utf-8") == '{"test": 1}'
+
+
+def test_sync_to_bdc_creates_data_dir_if_missing(tmp_path: Path) -> None:
+    src = tmp_path / "taxonomy.json"
+    src.write_text("{}", encoding="utf-8")
+    bdc = tmp_path / "bdc_repo"
+    bdc.mkdir()
+    # data/ does NOT exist — sync must create it
+    bt.sync_to_bdc(src, bdc_path=bdc)
+    assert (bdc / "data" / "taxonomy.json").exists()
+
+
+def test_main_no_sync_writes_artifact(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    taxonomy_file = tmp_path / "taxonomy.yaml"
+    taxonomy_file.write_text(
+        "- category: C\n  description: d\n  methods:\n"
+        "    - name: X\n      status: covered\n      frameworks: [owasp_llm01]\n"
+        "      blurb: b\n      tests: []\n",
+        encoding="utf-8",
+    )
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / "published").mkdir()
+    bt.main([
+        "--taxonomy", str(taxonomy_file),
+        "--no-sync",
+        "--artifact-dest", str(tmp_path / "published" / "taxonomy.json"),
+    ])
+    assert (tmp_path / "published" / "taxonomy.json").exists()

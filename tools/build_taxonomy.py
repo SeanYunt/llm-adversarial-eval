@@ -88,3 +88,65 @@ def validate(taxonomy: list[dict], *, repo_root: Path = REPO_ROOT) -> list[str]:
                                 f"'{name}': marker '{fw}' not found in {rel}"
                             )
     return warnings
+
+
+def write_artifact(taxonomy: list[dict], *, dest: Path) -> Path:
+    """Render taxonomy to JSON and write to dest. Returns dest path."""
+    dest = Path(dest)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    rendered = to_render_json(taxonomy)
+    dest.write_text(json.dumps(rendered, indent=2), encoding="utf-8")
+    return dest
+
+
+def sync_to_bdc(artifact: Path, *, bdc_path: Path) -> Path:
+    """Copy artifact JSON into bdc_path/data/. Creates data/ if needed."""
+    data_dir = Path(bdc_path) / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    dest = data_dir / Path(artifact).name
+    shutil.copy2(artifact, dest)
+    return dest
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description="Build the published LLM attack taxonomy JSON.")
+    parser.add_argument("--taxonomy", default=str(REPO_ROOT / "taxonomy.yaml"),
+                        help="Path to taxonomy.yaml (default: repo root)")
+    parser.add_argument("--artifact-dest",
+                        default=str(REPO_ROOT / "published" / "taxonomy.json"),
+                        help="Where to write taxonomy.json in the eval repo")
+    parser.add_argument("--bdc-path", default=str(REPO_ROOT.parent / "blackdiamondconsulting.ai"),
+                        help="Path to the BDC repo (default: ../blackdiamondconsulting.ai)")
+    parser.add_argument("--no-sync", action="store_true",
+                        help="Skip copying to the BDC repo")
+    parser.add_argument("--source-base-url", default="",
+                        help="Base URL for source links in the rendered page (off by default)")
+    args = parser.parse_args(argv)
+
+    taxonomy = load_taxonomy(Path(args.taxonomy))
+    warnings = validate(taxonomy)
+    if warnings:
+        print("DRIFT WARNINGS:")
+        for w in warnings:
+            print(f"  ⚠  {w}")
+        print()
+
+    artifact = write_artifact(taxonomy, dest=Path(args.artifact_dest))
+    print(f"✓ Wrote {artifact}")
+
+    if not args.no_sync:
+        dest = sync_to_bdc(artifact, bdc_path=Path(args.bdc_path))
+        print(f"✓ Copied to {dest}")
+        print()
+        print("Next steps:")
+        print(f"  cd {args.bdc_path}")
+        print("  hugo server")
+        print("  # verify the taxonomy page at http://localhost:1313")
+        print("  git add data/taxonomy.json && git commit -m 'update: taxonomy matrix'")
+        print("  git push")
+    else:
+        print("  (--no-sync: skipped BDC copy)")
+
+
+if __name__ == "__main__":
+    main()
