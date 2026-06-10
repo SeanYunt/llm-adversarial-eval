@@ -128,15 +128,15 @@ def main(argv: list[str] | None = None) -> None:
     if warnings:
         print("DRIFT WARNINGS:")
         for w in warnings:
-            print(f"  ⚠  {w}")
+            print(f"  DRIFT: {w}")
         print()
 
     artifact = write_artifact(taxonomy, dest=Path(args.artifact_dest))
-    print(f"✓ Wrote {artifact}")
+    print(f"Wrote {artifact}")
 
     if not args.no_sync:
         dest = sync_to_bdc(artifact, bdc_path=Path(args.bdc_path))
-        print(f"✓ Copied to {dest}")
+        print(f"Copied to {dest}")
         print()
         print("Next steps:")
         print(f"  cd {args.bdc_path}")
