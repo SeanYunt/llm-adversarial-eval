@@ -57,6 +57,7 @@ def test_render_json_adds_status_label() -> None:
     method = out["categories"][0]["methods"][0]
     assert method["status_label"] == "Covered"
     assert out["categories"][0]["methods"][1]["status_label"] == "Expanding"
+    assert out["categories"][1]["methods"][0]["status_label"] == "In-depth"
 
 
 def test_source_links_empty_by_default() -> None:
@@ -69,3 +70,12 @@ def test_source_links_built_when_base_url_set() -> None:
     assert out["categories"][0]["methods"][0]["source_links"] == [
         "https://example.com/blob/main/tests/test_jailbreak.py"
     ]
+
+
+def test_render_json_ignores_unknown_status_in_summary() -> None:
+    tax = [{"category": "C", "description": "d", "methods": [
+        {"name": "X", "status": "bogus", "frameworks": [], "blurb": "b", "tests": []},
+    ]}]
+    out = bt.to_render_json(tax)
+    assert set(out["summary"]) == {"covered", "in_depth", "expanding", "total"}
+    assert out["summary"]["total"] == 1

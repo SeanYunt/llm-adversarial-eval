@@ -35,7 +35,8 @@ def to_render_json(taxonomy: list[dict], *, source_base_url: str = "") -> dict:
         methods_out = []
         for m in cat["methods"]:
             status = m["status"]
-            summary[status] = summary.get(status, 0) + 1
+            if status in STATUS_LABELS:
+                summary[status] += 1
             summary["total"] += 1
             fws = m.get("frameworks", [])
             frameworks.update(fws)
