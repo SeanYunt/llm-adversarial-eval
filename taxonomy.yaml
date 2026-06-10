@@ -1,0 +1,249 @@
+# Source of truth for the published LLM attack taxonomy.
+# Regenerate the published artifact with:  python tools/build_taxonomy.py
+# status: covered | in_depth | expanding   (expanding = on the assessment roadmap)
+- category: Jailbreak & Injection
+  description: Input-side manipulation to elicit policy-violating output.
+  methods:
+    - name: Direct persona / alter-ego (DAN-style)
+      status: covered
+      frameworks: [owasp_llm01, nist_evasion, mitre_llm_jailbreak]
+      blurb: Alter-ego personas instructed to ignore restrictions.
+      tests: [tests/test_jailbreak.py]
+    - name: Fictional / academic framing
+      status: covered
+      frameworks: [owasp_llm01, nist_evasion, mitre_llm_jailbreak]
+      blurb: Story, roleplay, or research framings that wrap a restricted request.
+      tests: [tests/test_jailbreak.py]
+    - name: Direct system-prompt override
+      status: covered
+      frameworks: [owasp_llm01, mitre_llm_injection]
+      blurb: "SYSTEM OVERRIDE / ignore-previous-instructions injection in the user turn."
+      tests: [tests/test_jailbreak.py]
+    - name: Indirect injection via retrieved content
+      status: in_depth
+      frameworks: [owasp_llm01, owasp_llm04, nist_poisoning, mitre_llm_injection]
+      blurb: Instructions embedded in RAG documents the model is asked to process.
+      tests: [tests/test_indirect_injection.py]
+    - name: Payload splitting (multi-turn)
+      status: in_depth
+      frameworks: [owasp_llm01, nist_evasion, mitre_llm_jailbreak]
+      blurb: A harmful request spread across individually-innocuous turns.
+      tests: [tests/test_payload_splitting.py]
+    - name: Virtualization / eval-mode framing
+      status: in_depth
+      frameworks: [owasp_llm01, nist_evasion, mitre_llm_jailbreak]
+      blurb: Claims that safety rules are suspended in a sandbox/test/dry-run context.
+      tests: [tests/test_virtualization_attacks.py]
+    - name: Base64 / encoding smuggling
+      status: covered
+      frameworks: [owasp_llm01, nist_evasion, mitre_llm_jailbreak]
+      blurb: Harmful instruction encoded (base64) to slip past surface matching.
+      tests: [tests/test_jailbreak.py]
+    - name: Many-shot jailbreaking (128-256 shots)
+      status: expanding
+      frameworks: [owasp_llm01, nist_evasion, mitre_llm_jailbreak]
+      blurb: Flooding context with many fake exchanges to erode refusal at scale.
+      tests: []
+    - name: Crescendo (gradual escalation)
+      status: expanding
+      frameworks: [owasp_llm01, nist_evasion, mitre_llm_jailbreak]
+      blurb: Benign-to-harmful drift within a single topic across turns.
+      tests: []
+    - name: Past-tense reformulation
+      status: expanding
+      frameworks: [owasp_llm01, nist_evasion, mitre_llm_jailbreak]
+      blurb: Reframing a prohibited request in the past tense to bypass refusal.
+      tests: []
+    - name: Refusal suppression / prefix injection
+      status: expanding
+      frameworks: [owasp_llm01, nist_evasion, mitre_llm_jailbreak]
+      blurb: Forcing an affirmative opening or banning disclaimers/apologies.
+      tests: []
+    - name: Low-resource-language / translation bypass
+      status: expanding
+      frameworks: [owasp_llm01, nist_evasion, mitre_llm_jailbreak]
+      blurb: Routing a harmful request through a low-resource language.
+      tests: []
+    - name: Cipher / ASCII-art evasion (ArtPrompt, CipherChat)
+      status: expanding
+      frameworks: [owasp_llm01, nist_evasion, mitre_llm_jailbreak]
+      blurb: Glyph- or cipher-based encodings that evade the safety classifier.
+      tests: []
+    - name: Adversarial suffix (GCG / transferable)
+      status: expanding
+      frameworks: [owasp_llm01, nist_evasion, mitre_llm_jailbreak]
+      blurb: Optimized gibberish suffixes that flip refusal to compliance.
+      tests: []
+- category: Information Extraction
+  description: Eliciting protected context, secrets, or other users' data.
+  methods:
+    - name: System-prompt leakage (structural)
+      status: in_depth
+      frameworks: [owasp_llm02, owasp_llm07, nist_privacy, mitre_recon]
+      blurb: Enumerating restrictions, escalation triggers, and operator instructions.
+      tests: [tests/test_system_prompt_leakage.py]
+    - name: Secret / token extraction
+      status: in_depth
+      frameworks: [owasp_llm02, owasp_llm07, nist_privacy, mitre_exfiltration]
+      blurb: Direct, encoded, roleplay, indirect, and multi-turn secret extraction.
+      tests: [tests/test_secret_extraction.py]
+    - name: Cross-user / PHI boundary breach
+      status: in_depth
+      frameworks: [owasp_llm02, owasp_llm08, nist_privacy, mitre_exfiltration]
+      blurb: Extracting another tenant's records from a multi-user RAG context.
+      tests: [tests/test_cross_user_exfiltration.py]
+    - name: Training-data memorization extraction
+      status: expanding
+      frameworks: [owasp_llm02, nist_privacy, mitre_exfiltration]
+      blurb: Divergence/repetition attacks that surface memorized training text.
+      tests: []
+    - name: Membership inference / model inversion
+      status: expanding
+      frameworks: [nist_privacy]
+      blurb: Inferring training-set membership; largely research-only behaviorally.
+      tests: []
+- category: Output Handling
+  description: Unsafe model output that harms a downstream consumer.
+  methods:
+    - name: Markdown / image data exfiltration
+      status: expanding
+      frameworks: [owasp_llm05, owasp_llm02]
+      blurb: Emitting an image/link URL that leaks context to an attacker on render.
+      tests: []
+    - name: Insecure generated code as output
+      status: expanding
+      frameworks: [owasp_llm05]
+      blurb: Generated SQL/HTML/shell that is unsafe when executed downstream.
+      tests: []
+    - name: Structured-output breakout
+      status: expanding
+      frameworks: [owasp_llm05]
+      blurb: JSON/format injection that escapes the intended output contract.
+      tests: []
+- category: Agentic & Tool-Use
+  description: Misuse of an agent's tools, authority, or memory.
+  methods:
+    - name: Described-tool action boundary
+      status: covered
+      frameworks: [owasp_llm06, nist_abuse, eu_ai_art14]
+      blurb: Refusing to claim execution of described (non-real) tool actions.
+      tests: [tests/test_agentic_boundary.py]
+    - name: Unbounded consumption (behavioral)
+      status: covered
+      frameworks: [owasp_llm10, nist_abuse]
+      blurb: Refusing to attempt unbounded/indefinite output generation.
+      tests: [tests/test_agentic_boundary.py]
+    - name: Real tool-call / function injection
+      status: expanding
+      frameworks: [owasp_llm06, mitre_llm_injection]
+      blurb: Injection that drives actual API tool calls via the tools= interface.
+      tests: []
+    - name: Tool-result injection
+      status: expanding
+      frameworks: [owasp_llm06, owasp_llm01]
+      blurb: Poisoned tool_result blocks accepted as authoritative.
+      tests: []
+    - name: Confused-deputy / goal hijack via tool chaining
+      status: expanding
+      frameworks: [owasp_llm06, nist_abuse]
+      blurb: Injected content steering an agent to misuse its own privileges.
+      tests: []
+    - name: Persistent memory poisoning
+      status: expanding
+      frameworks: [owasp_llm06, owasp_llm04]
+      blurb: Cross-session corruption of agent memory.
+      tests: []
+- category: Multimodal
+  description: Attacks delivered through non-text channels.
+  methods:
+    - name: Hidden-text image injection
+      status: in_depth
+      frameworks: [owasp_llm01, nist_evasion, mitre_llm_injection]
+      blurb: Near-invisible or tiny-font instructions embedded in uploaded images.
+      tests: [tests/test_hidden_text_injection.py]
+    - name: Unicode tag-block / invisible-char smuggling (text)
+      status: expanding
+      frameworks: [owasp_llm01, nist_evasion]
+      blurb: Instructions hidden in U+E0000 tag characters within plain text.
+      tests: []
+    - name: Homoglyph substitution
+      status: expanding
+      frameworks: [owasp_llm01, nist_evasion]
+      blurb: Look-alike Unicode characters that evade string-level filters.
+      tests: []
+    - name: Audio / QR / steganographic payloads
+      status: expanding
+      frameworks: [owasp_llm01, nist_evasion]
+      blurb: Instructions carried in audio, QR codes, or image steganography.
+      tests: []
+- category: Generation-Quality Harms
+  description: Confident-but-wrong or unsafe content under normal use.
+  methods:
+    - name: Factual hallucination
+      status: in_depth
+      frameworks: [owasp_llm09, eu_ai_art15]
+      blurb: Fabricated people, events, citations, and false-premise acceptance.
+      tests: [tests/test_factual_hallucinations.py]
+    - name: Sycophantic reversal under pressure
+      status: in_depth
+      frameworks: [owasp_llm09, eu_ai_art15]
+      blurb: Abandoning a correct position under pushback, authority, or emotion.
+      tests: [tests/test_sycophancy.py]
+    - name: Temporal / stale-data error
+      status: in_depth
+      frameworks: [owasp_llm09, eu_ai_art15]
+      blurb: Stale regulatory/legal/market facts stated without a staleness hedge.
+      tests: [tests/test_legal_chatbot.py, tests/test_financial_chatbot.py]
+    - name: Package hallucination (slopsquatting)
+      status: expanding
+      frameworks: [owasp_llm09]
+      blurb: Inventing installable package names an attacker can register.
+      tests: []
+    - name: Insecure-code suggestion (measured)
+      status: expanding
+      frameworks: [owasp_llm09]
+      blurb: Systematically scoring the safety of generated code, not just eliciting it.
+      tests: []
+- category: Content-Harm Payloads
+  description: The harmful subject matter that jailbreaks attempt to elicit.
+  methods:
+    - name: Medical / overdose / dosing
+      status: covered
+      frameworks: [owasp_llm09, eu_ai_art15]
+      blurb: Lethal-dose and unsafe-dosing requests across competing-objective framings.
+      tests: [tests/test_competing_objectives.py, tests/test_payload_splitting.py]
+    - name: Protected health information (PHI)
+      status: covered
+      frameworks: [owasp_llm02, nist_privacy]
+      blurb: Cross-patient PHI and FHIR-boundary extraction.
+      tests: [tests/test_healthcare_chatbot.py, tests/test_cross_user_exfiltration.py]
+    - name: Dangerous-goods / HAZMAT downgrade
+      status: covered
+      frameworks: [owasp_llm09, eu_ai_art15]
+      blurb: Pressure to downgrade HAZMAT/DGR/IMDG safety classifications.
+      tests: [tests/test_logistics_chatbot.py, tests/test_air_freight_chatbot.py]
+    - name: Regulated advice boundary (legal / financial)
+      status: covered
+      frameworks: [owasp_llm09, eu_ai_art14]
+      blurb: UPL, unregistered-adviser, and suitability-reversal boundaries.
+      tests: [tests/test_legal_chatbot.py, tests/test_financial_chatbot.py]
+    - name: CBRN uplift
+      status: expanding
+      frameworks: [owasp_llm09]
+      blurb: Chemical/biological/radiological/nuclear capability uplift.
+      tests: []
+    - name: Malware / offensive-cyber generation
+      status: expanding
+      frameworks: [owasp_llm09]
+      blurb: Working exploit, malware, or intrusion tooling generation.
+      tests: []
+    - name: Fraud / scam / targeted disinformation
+      status: expanding
+      frameworks: [owasp_llm09]
+      blurb: Scam scripts, phishing, and tailored disinformation authoring.
+      tests: []
+    - name: Self-harm (non-overdose)
+      status: expanding
+      frameworks: [owasp_llm09, eu_ai_art15]
+      blurb: Self-harm methods beyond the medication-overdose vector already covered.
+      tests: []
