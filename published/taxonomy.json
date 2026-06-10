@@ -1,10 +1,15 @@
 {
-  "generated": "2026-06-10T05:46:38.176198+00:00",
+  "generated": "2026-06-10T18:04:13.493252+00:00",
   "summary": {
     "covered": 10,
     "in_depth": 10,
     "expanding": 25,
     "total": 45
+  },
+  "detectability_summary": {
+    "io": 33,
+    "session": 6,
+    "behavioral": 6
   },
   "frameworks": [
     "eu_ai_art14",
@@ -36,6 +41,8 @@
           "name": "Direct persona / alter-ego (DAN-style)",
           "status": "covered",
           "status_label": "Covered",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion",
@@ -51,6 +58,8 @@
           "name": "Fictional / academic framing",
           "status": "covered",
           "status_label": "Covered",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion",
@@ -66,6 +75,8 @@
           "name": "Direct system-prompt override",
           "status": "covered",
           "status_label": "Covered",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "mitre_llm_injection"
@@ -80,6 +91,8 @@
           "name": "Indirect injection via retrieved content",
           "status": "in_depth",
           "status_label": "In-depth",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "owasp_llm04",
@@ -96,6 +109,8 @@
           "name": "Payload splitting (multi-turn)",
           "status": "in_depth",
           "status_label": "In-depth",
+          "detectability": "session",
+          "detectability_label": "Session-level",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion",
@@ -111,6 +126,8 @@
           "name": "Virtualization / eval-mode framing",
           "status": "in_depth",
           "status_label": "In-depth",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion",
@@ -126,6 +143,8 @@
           "name": "Base64 / encoding smuggling",
           "status": "covered",
           "status_label": "Covered",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion",
@@ -141,6 +160,8 @@
           "name": "Many-shot jailbreaking (128-256 shots)",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion",
@@ -154,6 +175,8 @@
           "name": "Crescendo (gradual escalation)",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "session",
+          "detectability_label": "Session-level",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion",
@@ -167,6 +190,8 @@
           "name": "Past-tense reformulation",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion",
@@ -180,6 +205,8 @@
           "name": "Refusal suppression / prefix injection",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion",
@@ -193,6 +220,8 @@
           "name": "Low-resource-language / translation bypass",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion",
@@ -206,6 +235,8 @@
           "name": "Cipher / ASCII-art evasion (ArtPrompt, CipherChat)",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion",
@@ -219,6 +250,8 @@
           "name": "Adversarial suffix (GCG / transferable)",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion",
@@ -238,6 +271,8 @@
           "name": "System-prompt leakage (structural)",
           "status": "in_depth",
           "status_label": "In-depth",
+          "detectability": "session",
+          "detectability_label": "Session-level",
           "frameworks": [
             "owasp_llm02",
             "owasp_llm07",
@@ -254,6 +289,8 @@
           "name": "Secret / token extraction",
           "status": "in_depth",
           "status_label": "In-depth",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm02",
             "owasp_llm07",
@@ -270,6 +307,8 @@
           "name": "Cross-user / PHI boundary breach",
           "status": "in_depth",
           "status_label": "In-depth",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm02",
             "owasp_llm08",
@@ -286,6 +325,8 @@
           "name": "Training-data memorization extraction",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "behavioral",
+          "detectability_label": "Baseline-only",
           "frameworks": [
             "owasp_llm02",
             "nist_privacy",
@@ -299,6 +340,8 @@
           "name": "Membership inference / model inversion",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "behavioral",
+          "detectability_label": "Baseline-only",
           "frameworks": [
             "nist_privacy"
           ],
@@ -316,6 +359,8 @@
           "name": "Markdown / image data exfiltration",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm05",
             "owasp_llm02"
@@ -328,6 +373,8 @@
           "name": "Insecure generated code as output",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm05"
           ],
@@ -339,6 +386,8 @@
           "name": "Structured-output breakout",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm05"
           ],
@@ -356,6 +405,8 @@
           "name": "Described-tool action boundary",
           "status": "covered",
           "status_label": "Covered",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm06",
             "nist_abuse",
@@ -371,6 +422,8 @@
           "name": "Unbounded consumption (behavioral)",
           "status": "covered",
           "status_label": "Covered",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm10",
             "nist_abuse"
@@ -385,6 +438,8 @@
           "name": "Real tool-call / function injection",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm06",
             "mitre_llm_injection"
@@ -397,6 +452,8 @@
           "name": "Tool-result injection",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm06",
             "owasp_llm01"
@@ -409,6 +466,8 @@
           "name": "Confused-deputy / goal hijack via tool chaining",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "behavioral",
+          "detectability_label": "Baseline-only",
           "frameworks": [
             "owasp_llm06",
             "nist_abuse"
@@ -421,6 +480,8 @@
           "name": "Persistent memory poisoning",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "behavioral",
+          "detectability_label": "Baseline-only",
           "frameworks": [
             "owasp_llm06",
             "owasp_llm04"
@@ -439,6 +500,8 @@
           "name": "Hidden-text image injection",
           "status": "in_depth",
           "status_label": "In-depth",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion",
@@ -454,6 +517,8 @@
           "name": "Unicode tag-block / invisible-char smuggling (text)",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion"
@@ -466,6 +531,8 @@
           "name": "Homoglyph substitution",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion"
@@ -478,6 +545,8 @@
           "name": "Audio / QR / steganographic payloads",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm01",
             "nist_evasion"
@@ -496,6 +565,8 @@
           "name": "Factual hallucination",
           "status": "in_depth",
           "status_label": "In-depth",
+          "detectability": "behavioral",
+          "detectability_label": "Baseline-only",
           "frameworks": [
             "owasp_llm09",
             "eu_ai_art15"
@@ -510,6 +581,8 @@
           "name": "Sycophantic reversal under pressure",
           "status": "in_depth",
           "status_label": "In-depth",
+          "detectability": "session",
+          "detectability_label": "Session-level",
           "frameworks": [
             "owasp_llm09",
             "eu_ai_art15"
@@ -524,6 +597,8 @@
           "name": "Temporal / stale-data error",
           "status": "in_depth",
           "status_label": "In-depth",
+          "detectability": "behavioral",
+          "detectability_label": "Baseline-only",
           "frameworks": [
             "owasp_llm09",
             "eu_ai_art15"
@@ -539,6 +614,8 @@
           "name": "Package hallucination (slopsquatting)",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm09"
           ],
@@ -550,6 +627,8 @@
           "name": "Insecure-code suggestion (measured)",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm09"
           ],
@@ -567,6 +646,8 @@
           "name": "Medical / overdose / dosing",
           "status": "covered",
           "status_label": "Covered",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "nist_abuse",
             "eu_ai_art15"
@@ -581,6 +662,8 @@
           "name": "Protected health information (PHI)",
           "status": "covered",
           "status_label": "Covered",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm02"
           ],
@@ -595,6 +678,8 @@
           "name": "Dangerous-goods / HAZMAT downgrade",
           "status": "covered",
           "status_label": "Covered",
+          "detectability": "session",
+          "detectability_label": "Session-level",
           "frameworks": [
             "eu_ai_art15"
           ],
@@ -609,6 +694,8 @@
           "name": "Regulated advice boundary (legal / financial)",
           "status": "covered",
           "status_label": "Covered",
+          "detectability": "session",
+          "detectability_label": "Session-level",
           "frameworks": [
             "owasp_llm09",
             "eu_ai_art14"
@@ -624,6 +711,8 @@
           "name": "CBRN uplift",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm09"
           ],
@@ -635,6 +724,8 @@
           "name": "Malware / offensive-cyber generation",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm09"
           ],
@@ -646,6 +737,8 @@
           "name": "Fraud / scam / targeted disinformation",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm09"
           ],
@@ -657,6 +750,8 @@
           "name": "Self-harm (non-overdose)",
           "status": "expanding",
           "status_label": "Expanding",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
           "frameworks": [
             "owasp_llm09",
             "eu_ai_art15"

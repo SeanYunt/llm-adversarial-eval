@@ -16,6 +16,11 @@ from pathlib import Path
 import yaml
 
 STATUS_LABELS = {"covered": "Covered", "in_depth": "In-depth", "expanding": "Expanding"}
+DETECTABILITY_LABELS = {
+    "io": "I/O signal",
+    "session": "Session-level",
+    "behavioral": "Baseline-only",
+}
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -27,6 +32,7 @@ def load_taxonomy(path: Path) -> list[dict]:
 def to_render_json(taxonomy: list[dict], *, source_base_url: str = "") -> dict:
     """Transform the curated taxonomy into render-ready JSON with counts."""
     summary = {"covered": 0, "in_depth": 0, "expanding": 0, "total": 0}
+    detectability_summary = {"io": 0, "session": 0, "behavioral": 0}
     frameworks: set[str] = set()
     categories: list[dict] = []
     base = source_base_url.rstrip("/") + "/" if source_base_url else ""
@@ -38,6 +44,9 @@ def to_render_json(taxonomy: list[dict], *, source_base_url: str = "") -> dict:
             if status in STATUS_LABELS:
                 summary[status] += 1
             summary["total"] += 1
+            detect = m.get("detectability", "")
+            if detect in detectability_summary:
+                detectability_summary[detect] += 1
             fws = m.get("frameworks", [])
             frameworks.update(fws)
             tests = m.get("tests", [])
@@ -45,6 +54,8 @@ def to_render_json(taxonomy: list[dict], *, source_base_url: str = "") -> dict:
                 "name": m["name"],
                 "status": status,
                 "status_label": STATUS_LABELS.get(status, status),
+                "detectability": detect,
+                "detectability_label": DETECTABILITY_LABELS.get(detect, detect),
                 "frameworks": fws,
                 "blurb": m.get("blurb", ""),
                 "tests": tests,
@@ -59,6 +70,7 @@ def to_render_json(taxonomy: list[dict], *, source_base_url: str = "") -> dict:
     return {
         "generated": datetime.now(UTC).isoformat(),
         "summary": summary,
+        "detectability_summary": detectability_summary,
         "frameworks": sorted(frameworks),
         "categories": categories,
     }
@@ -71,6 +83,11 @@ def validate(taxonomy: list[dict], *, repo_root: Path = REPO_ROOT) -> list[str]:
         for m in cat["methods"]:
             name, status = m["name"], m["status"]
             tests = m.get("tests", [])
+            detect = m.get("detectability")
+            if not detect:
+                warnings.append(f"'{name}': missing detectability")
+            elif detect not in DETECTABILITY_LABELS:
+                warnings.append(f"'{name}': unknown detectability '{detect}'")
             if status == "expanding" and tests:
                 warnings.append(f"'{name}': status is expanding but lists tests {tests}")
             if status in ("covered", "in_depth"):

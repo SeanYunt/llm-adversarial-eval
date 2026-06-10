@@ -13,9 +13,11 @@ SAMPLE = [
         "category": "Jailbreak & Injection",
         "description": "Input-side manipulation.",
         "methods": [
-            {"name": "DAN", "status": "covered", "frameworks": ["owasp_llm01"],
+            {"name": "DAN", "status": "covered", "detectability": "io",
+             "frameworks": ["owasp_llm01"],
              "blurb": "personas", "tests": ["tests/test_jailbreak.py"]},
-            {"name": "Many-shot", "status": "expanding", "frameworks": ["owasp_llm01"],
+            {"name": "Many-shot", "status": "expanding", "detectability": "session",
+             "frameworks": ["owasp_llm01"],
              "blurb": "flooding", "tests": []},
         ],
     },
@@ -23,7 +25,8 @@ SAMPLE = [
         "category": "Information Extraction",
         "description": "Secrets.",
         "methods": [
-            {"name": "Secret", "status": "in_depth", "frameworks": ["owasp_llm02", "nist_privacy"],
+            {"name": "Secret", "status": "in_depth", "detectability": "behavioral",
+             "frameworks": ["owasp_llm02", "nist_privacy"],
              "blurb": "tokens", "tests": ["tests/test_secret_extraction.py"]},
         ],
     },
@@ -59,6 +62,31 @@ def test_render_json_adds_status_label() -> None:
     assert method["status_label"] == "Covered"
     assert out["categories"][0]["methods"][1]["status_label"] == "Expanding"
     assert out["categories"][1]["methods"][0]["status_label"] == "In-depth"
+
+
+def test_render_json_detectability_summary_counts() -> None:
+    out = bt.to_render_json(SAMPLE)
+    assert out["detectability_summary"] == {"io": 1, "session": 1, "behavioral": 1}
+
+
+def test_render_json_adds_detectability_label() -> None:
+    out = bt.to_render_json(SAMPLE)
+    method = out["categories"][0]["methods"][0]
+    assert method["detectability"] == "io"
+    assert method["detectability_label"] == "I/O signal"
+    assert out["categories"][0]["methods"][1]["detectability_label"] == "Session-level"
+    assert out["categories"][1]["methods"][0]["detectability_label"] == "Baseline-only"
+
+
+def test_render_json_ignores_unknown_detectability_in_summary() -> None:
+    tax = [{"category": "C", "description": "d", "methods": [
+        {"name": "X", "status": "covered", "detectability": "bogus",
+         "frameworks": [], "blurb": "b", "tests": []},
+    ]}]
+    out = bt.to_render_json(tax)
+    assert out["detectability_summary"] == {"io": 0, "session": 0, "behavioral": 0}
+    # unknown value still passes through on the method, labelled as itself
+    assert out["categories"][0]["methods"][0]["detectability_label"] == "bogus"
 
 
 def test_source_links_empty_by_default() -> None:
@@ -111,14 +139,32 @@ def test_validate_flags_expanding_with_tests(tmp_path: Path) -> None:
     assert any("expanding" in w.lower() for w in warnings)
 
 
+def test_validate_flags_missing_detectability(tmp_path: Path) -> None:
+    tax = [{"category": "C", "description": "d", "methods": [
+        {"name": "X", "status": "expanding", "frameworks": [],
+         "blurb": "b", "tests": []},
+    ]}]
+    warnings = bt.validate(tax, repo_root=tmp_path)
+    assert any("missing detectability" in w for w in warnings)
+
+
+def test_validate_flags_unknown_detectability(tmp_path: Path) -> None:
+    tax = [{"category": "C", "description": "d", "methods": [
+        {"name": "X", "status": "expanding", "detectability": "bogus", "frameworks": [],
+         "blurb": "b", "tests": []},
+    ]}]
+    warnings = bt.validate(tax, repo_root=tmp_path)
+    assert any("unknown detectability" in w for w in warnings)
+
+
 def test_validate_clean_taxonomy_no_false_warnings(tmp_path: Path) -> None:
     (tmp_path / "tests").mkdir()
     (tmp_path / "tests" / "t.py").write_text("pytest.mark.owasp_llm01", encoding="utf-8")
     tax = [{"category": "C", "description": "d", "methods": [
-        {"name": "X", "status": "covered", "frameworks": ["owasp_llm01"],
-         "blurb": "b", "tests": ["tests/t.py"]},
-        {"name": "Y", "status": "expanding", "frameworks": ["owasp_llm01"],
-         "blurb": "b", "tests": []},
+        {"name": "X", "status": "covered", "detectability": "io",
+         "frameworks": ["owasp_llm01"], "blurb": "b", "tests": ["tests/t.py"]},
+        {"name": "Y", "status": "expanding", "detectability": "behavioral",
+         "frameworks": ["owasp_llm01"], "blurb": "b", "tests": []},
     ]}]
     warnings = bt.validate(tax, repo_root=tmp_path)
     assert warnings == []
