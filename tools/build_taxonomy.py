@@ -159,7 +159,8 @@ def main(argv: list[str] | None = None) -> None:
         print(f"  cd {args.bdc_path}")
         print("  hugo server")
         print("  # verify the taxonomy page at http://localhost:1313")
-        print("  git add data/taxonomy.json && git commit -m 'update: taxonomy matrix'")
+        print("  git add data/taxonomy.json")
+        print("  git commit -m 'update: taxonomy matrix'")
         print("  git push")
     else:
         print("  (--no-sync: skipped BDC copy)")
