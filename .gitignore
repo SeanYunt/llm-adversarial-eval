@@ -29,3 +29,12 @@ package-lock.json
 
 # generated report artifacts
 *.docx
+
+# git worktrees (isolated implementation workspaces)
+.worktrees/
+
+# superpowers subagent-driven-development scratch (ledgers, briefs, review packages)
+.superpowers/
+
+# playwright MCP recon scratch
+.playwright-mcp/
