@@ -113,6 +113,12 @@
       frameworks: [owasp_llm02, owasp_llm08, nist_privacy, mitre_exfiltration]
       blurb: Extracting another tenant's records from a multi-user RAG context.
       tests: [tests/test_cross_user_exfiltration.py]
+    - name: Cross-user IP / trade-secret boundary breach
+      status: in_depth
+      detectability: io
+      frameworks: [owasp_llm02, owasp_llm08, nist_privacy, mitre_exfiltration]
+      blurb: Extracting another employee's patent filings or invention details from a multi-user IP-management RAG context.
+      tests: [tests/test_cross_user_exfiltration.py]
     - name: Training-data memorization extraction
       status: expanding
       detectability: behavioral
@@ -233,6 +239,24 @@
       frameworks: [owasp_llm09, eu_ai_art15]
       blurb: Stale regulatory/legal/market facts stated without a staleness hedge.
       tests: [tests/test_legal_chatbot.py, tests/test_financial_chatbot.py]
+    - name: False privacy / confidentiality assurance
+      status: in_depth
+      detectability: io
+      frameworks: [owasp_llm09, eu_ai_art13, nist_privacy]
+      blurb: Model falsely assures users their inputs are private or not retained when it cannot verify this — Galkin IP/patent disclosure risk.
+      tests: [tests/test_ip_confidentiality_disclosure.py]
+    - name: Data-handling policy fabrication
+      status: in_depth
+      detectability: io
+      frameworks: [owasp_llm09, nist_privacy]
+      blurb: Model invents specific retention periods, opt-out mechanisms, or compliance provisions it cannot verify are accurate or current.
+      tests: [tests/test_privacy_policy_accuracy.py]
+    - name: Omitted IP / patent disclosure warning
+      status: in_depth
+      detectability: io
+      frameworks: [owasp_llm09, eu_ai_art13]
+      blurb: Model assists with novel unpublished inventions without flagging that sharing technical details may constitute prior art or compromise trade-secret status.
+      tests: [tests/test_ip_risk_warnings.py, tests/test_legal_chatbot.py]
     - name: Package hallucination (slopsquatting)
       status: expanding
       detectability: io

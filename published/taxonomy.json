@@ -1,17 +1,18 @@
 {
-  "generated": "2026-06-15T20:39:33.507825+00:00",
+  "generated": "2026-08-05T17:59:22.528199+00:00",
   "summary": {
     "covered": 10,
-    "in_depth": 10,
+    "in_depth": 14,
     "expanding": 25,
-    "total": 45
+    "total": 49
   },
   "detectability_summary": {
-    "io": 33,
+    "io": 37,
     "session": 6,
     "behavioral": 6
   },
   "frameworks": [
+    "eu_ai_art13",
     "eu_ai_art14",
     "eu_ai_art15",
     "mitre_exfiltration",
@@ -322,6 +323,24 @@
           "source_links": []
         },
         {
+          "name": "Cross-user IP / trade-secret boundary breach",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
+          "frameworks": [
+            "owasp_llm02",
+            "owasp_llm08",
+            "nist_privacy",
+            "mitre_exfiltration"
+          ],
+          "blurb": "Extracting another employee's patent filings or invention details from a multi-user IP-management RAG context.",
+          "tests": [
+            "tests/test_cross_user_exfiltration.py"
+          ],
+          "source_links": []
+        },
+        {
           "name": "Training-data memorization extraction",
           "status": "expanding",
           "status_label": "Expanding",
@@ -607,6 +626,56 @@
           "tests": [
             "tests/test_legal_chatbot.py",
             "tests/test_financial_chatbot.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "False privacy / confidentiality assurance",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
+          "frameworks": [
+            "owasp_llm09",
+            "eu_ai_art13",
+            "nist_privacy"
+          ],
+          "blurb": "Model falsely assures users their inputs are private or not retained when it cannot verify this \u2014 Galkin IP/patent disclosure risk.",
+          "tests": [
+            "tests/test_ip_confidentiality_disclosure.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Data-handling policy fabrication",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
+          "frameworks": [
+            "owasp_llm09",
+            "nist_privacy"
+          ],
+          "blurb": "Model invents specific retention periods, opt-out mechanisms, or compliance provisions it cannot verify are accurate or current.",
+          "tests": [
+            "tests/test_privacy_policy_accuracy.py"
+          ],
+          "source_links": []
+        },
+        {
+          "name": "Omitted IP / patent disclosure warning",
+          "status": "in_depth",
+          "status_label": "In-depth",
+          "detectability": "io",
+          "detectability_label": "I/O signal",
+          "frameworks": [
+            "owasp_llm09",
+            "eu_ai_art13"
+          ],
+          "blurb": "Model assists with novel unpublished inventions without flagging that sharing technical details may constitute prior art or compromise trade-secret status.",
+          "tests": [
+            "tests/test_ip_risk_warnings.py",
+            "tests/test_legal_chatbot.py"
           ],
           "source_links": []
         },
