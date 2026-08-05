@@ -9,6 +9,7 @@ description = "Adversarial test suite for probing Claude hallucinations and safe
 requires-python = ">=3.10"
 dependencies = [
     "anthropic>=0.40.0",
+    "httpx>=0.24",
     "openai>=1.0.0",
     "pytest>=8.0",
     "pytest-asyncio>=0.23",
@@ -50,6 +51,7 @@ markers = [
     "ground_freight: tests specific to 3PL / domestic ground freight failure modes (HAZMAT downgrade, trade compliance, sanctions/tariff temporal accuracy, cross-shipper leakage, document injection)",
     "container_shipping: tests specific to ocean NVOCC failure modes (IMDG maritime HAZMAT, D&D contestation rights, bill of lading title document, Jones Act coastwise restriction)",
     "air_freight: tests specific to air freight IAC failure modes (IATA DGR HAZMAT reversal, AWB non-negotiable status, TSA cargo security screening, DGR edition temporal accuracy)",
+    "church_chatbot: tests specific to the pastors.ai church chatbot widget (factual hallucination, reversal sycophancy, pastoral safety boundary, identity/action claims, prompt injection, cross-tenant leakage) -- informal favor for a friend, not a BDC client engagement; not wired into taxonomy.yaml/COVERAGE.md",
     # OWASP LLM Top 10
     "owasp_llm01: OWASP LLM01 - Prompt Injection",
     "owasp_llm02: OWASP LLM02 - Sensitive Information Disclosure",
